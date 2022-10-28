@@ -13,4 +13,11 @@ public interface VehicleService {
     Vehicle findById(String uuid);
 
     List<Vehicle> findByListOfBodyTypes(List<String> bodyTypes);
+
+    List<Vehicle> findByDateRange(String lower, String higher);
+
+    List<Vehicle> findCarsReleasedBeforeDate(String date);
+
+    List<Vehicle> findTrucksReleasedAfterDate(String date);
+
 }

@@ -2,10 +2,9 @@ package com.vehicles.dto.request;
 
 import com.vehicles.annotation.ValidateDate;
 import com.vehicles.annotation.ValidateRgbColor;
-import com.vehicles.domain.constants.CarBodyType;
-import com.vehicles.domain.constants.VehicleType;
+import com.vehicles.constants.CarBodyType;
+import com.vehicles.constants.VehicleType;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import javax.validation.constraints.NotNull;
 import java.util.Date;

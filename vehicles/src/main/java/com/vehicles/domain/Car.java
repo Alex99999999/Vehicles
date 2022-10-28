@@ -1,6 +1,6 @@
 package com.vehicles.domain;
 
-import com.vehicles.domain.constants.CarBodyType;
+import com.vehicles.constants.CarBodyType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

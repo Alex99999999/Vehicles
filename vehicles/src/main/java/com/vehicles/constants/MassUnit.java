@@ -1,9 +1,9 @@
-package com.vehicles.domain.constants;
+package com.vehicles.constants;
 
 public enum MassUnit {
 
     KG(0, 26_270),
-    T(0, 26_270_000),
+    T(0, 26),
     LB(0, 57_915),
     ST(0, 4_136);
 

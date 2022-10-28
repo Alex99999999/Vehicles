@@ -49,10 +49,10 @@ public class VehiclesController {
     }
 
 
-    @GetMapping("/vehicles/dates")
-    ResponseEntity<List<Vehicle>> getByDateRange(@RequestParam @NotNull Integer lower,
-                                 @RequestParam @NotNull Integer higher) {
-        List<Vehicle> vehicles = this.vehicleRepository.findAll();
+    @GetMapping("/vehicles/all/dates")
+    ResponseEntity<List<Vehicle>> getByDateRange(@RequestParam @NotNull String lower,
+                                 @RequestParam @NotNull String higher) {
+        List<Vehicle> vehicles = this.vehicleService.findByDateRange(lower, higher);
         return new ResponseEntity<>(vehicles, HttpStatus.OK);
     }
 
@@ -62,13 +62,13 @@ public class VehiclesController {
         return new ResponseEntity<>(vehicles, HttpStatus.OK);    }
 
     @GetMapping("/cars")
-    ResponseEntity<List<Vehicle>> getAllCarsReleasedBeforeDate(@RequestParam @NotNull Integer date) {
-        List<Vehicle> vehicles = this.vehicleRepository.findAll();
+    ResponseEntity<List<Vehicle>> getAllCarsReleasedBeforeDate(@RequestParam @NotNull String date) {
+        List<Vehicle> vehicles = this.vehicleService.findCarsReleasedBeforeDate(date);
         return new ResponseEntity<>(vehicles, HttpStatus.OK);    }
 
     @GetMapping("/trucks")
-    ResponseEntity<List<Vehicle>> getAllTrucksReleasedAfterDate(@RequestParam @NotNull Integer date) {
-        List<Vehicle> vehicles = this.vehicleRepository.findAll();
+    ResponseEntity<List<Vehicle>> getAllTrucksReleasedAfterDate(@RequestParam @NotNull String date) {
+        List<Vehicle> vehicles = this.vehicleService.findTrucksReleasedAfterDate(date);
         return new ResponseEntity<>(vehicles, HttpStatus.OK);    }
 
 }

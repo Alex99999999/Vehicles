@@ -3,7 +3,7 @@ package com.vehicles.dto.request;
 import com.vehicles.annotation.ValidateDate;
 import com.vehicles.annotation.ValidateLoadingCapacity;
 import com.vehicles.annotation.ValidateRgbColor;
-import com.vehicles.domain.constants.VehicleType;
+import com.vehicles.constants.VehicleType;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;

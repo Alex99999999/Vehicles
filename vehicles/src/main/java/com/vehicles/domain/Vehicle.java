@@ -1,9 +1,10 @@
 package com.vehicles.domain;
 
-import com.vehicles.domain.constants.VehicleType;
+import com.vehicles.constants.VehicleType;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.UUID;
 
@@ -28,6 +29,6 @@ public class Vehicle {
     protected String color;
 
     @Column(name = "fabrication_date")
-    protected Date fabricationDate;
+    protected LocalDate fabricationDate;
 
 }

@@ -1,4 +1,4 @@
-package com.vehicles.domain.constants;
+package com.vehicles.constants;
 
 public enum CarBodyType {
 
