@@ -1,0 +1,24 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-truck-table
+      author: Oleksandr Hlushchenko
+      dbms: 'postgresql'
+      preConditions:
+        - onError: HALT
+        - onFail: HALT
+      changes:
+        - createTable:
+            tableName: truck
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    foreignKeyName: fk_id
+                    references: vehicle(id)
+              - column:
+                  name: loading_capacity
+                  type: varchar(10)
+                  constraints:
+                    nullable: false
+

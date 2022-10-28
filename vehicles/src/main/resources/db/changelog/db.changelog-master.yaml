@@ -1,0 +1,5 @@
+databaseChangeLog:
+#  - include:
+#      file: db/changelog/changeset/version1/version1-changelog-master.yml
+  - include:
+      file: db/changelog/changeset/version1-1/version1-1-changelog-master.yml

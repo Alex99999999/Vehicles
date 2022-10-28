@@ -1,0 +1,33 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-vehicle-table
+      author: Oleksandr Hlushchenko
+      dbms: 'postgresql'
+      preConditions:
+        - onFail: HALT
+        - onError: HALT
+      changes:
+        - createTable:
+            tableName: vehicle
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: type
+                  type: varchar(30)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: color
+                  type: varchar(30)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: fabrication_date
+                  type: DATE
+                  valueDate: YYYY-MM-DD
+                  constraints:
+                    nullable: false

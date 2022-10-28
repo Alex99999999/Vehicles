@@ -1,0 +1,10 @@
+databaseChangeLog:
+  - include:
+      file: 2022-10-25-0-create-vehicle-table.yml
+      relativeToChangelogFile: true
+  - include:
+      file: 2022-10-25-1-create-car-table.yml
+      relativeToChangelogFile: true
+  - include:
+      file: 2022-10-25-2-create-truck-table.yml
+      relativeToChangelogFile: true
