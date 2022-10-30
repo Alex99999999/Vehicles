@@ -1,10 +1,10 @@
 package com.vehicles.service;
 
 import com.vehicles.domain.Vehicle;
-import com.vehicles.constants.FileFormat;
 import com.vehicles.exception.exceptions.NoSuchEntityException;
+import com.vehicles.readers.format.AbstractFormatFileReader;
+import com.vehicles.readers.format.FormatFileReaderContainer;
 import com.vehicles.repository.VehicleRepository;
-import com.vehicles.validation.FileFormatValidator;
 import com.vehicles.utils.Utils;
 import com.vehicles.validation.ValidationUtils;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -22,16 +21,15 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class VehicleServiceImpl implements VehicleService {
 
-    private final FileFormatValidator fileFormatValidator;
     private final VehicleRepository vehicleRepository;
 
     @Override
     public List<Vehicle> uploadDataFromFile(String filePath) {
-        final String errorMessage = String.format("Wrong file format. Supported formats %s", Arrays.toString(FileFormat.values()));
-        boolean isFormatSupported = this.fileFormatValidator.isValid(filePath);
-        if (!isFormatSupported) {
-            throw new IllegalStateException(errorMessage);
-        }
+        ValidationUtils.validateFileFormatOrThrowFileFormatException(filePath);
+        String fileFormat = Utils.getFileFormat(filePath);
+        AbstractFormatFileReader reader = FormatFileReaderContainer.getFormatFileReader(fileFormat);
+
+
         return new ArrayList<>();
     }
 

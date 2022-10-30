@@ -1,12 +1,11 @@
 package com.vehicles.generator.controller;
 
-import com.vehicles.generator.dto.VehicleDto;
-import com.vehicles.generator.service.GeneratorService;
+import com.vehicles.generator.controller.dto.VehicleDto;
+import com.vehicles.generator.service.generator.GeneratorService;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -19,7 +18,7 @@ public class GeneratorController {
 
     @GetMapping("/file/{amount}")
     List<String> generateFiles(@PathVariable @NonNull Integer amount) {
-        return this.generatorService.generateFile(amount);
+        return this.generatorService.generateFilePaths(amount);
     }
 
     @GetMapping("/{amount}")

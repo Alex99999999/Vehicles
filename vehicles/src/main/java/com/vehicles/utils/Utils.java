@@ -10,4 +10,7 @@ public class Utils {
         return UUID.fromString(stringUuid);
     }
 
+    public static String getFileFormat(String filePath) {
+        return filePath.substring(filePath.lastIndexOf(".") + 1);
+    }
 }

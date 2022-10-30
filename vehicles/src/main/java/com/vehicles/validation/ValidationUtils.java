@@ -1,10 +1,14 @@
 package com.vehicles.validation;
 
+import com.vehicles.constants.FileFormat;
 import com.vehicles.exception.exceptions.DateFormatException;
+import com.vehicles.exception.exceptions.FileFormatException;
 
+import java.io.File;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.Arrays;
 
 public class ValidationUtils {
 
@@ -28,4 +32,25 @@ public class ValidationUtils {
         return localDate;
     }
 
+    public static void validateFileFormatOrThrowFileFormatException(String filePath) {
+        final String errorMessage = String.format("Wrong file format. Supported formats %s", Arrays.toString(FileFormat.values()));
+        boolean isValid = false;
+        if (!filePath.isBlank()) {
+            String fileFormat = filePath.substring(filePath.lastIndexOf(".") + 1);
+            isValid = Arrays.stream(FileFormat.values())
+                    .anyMatch(e -> e.name().equalsIgnoreCase(fileFormat));
+        }
+        if (!isValid) {
+            throw new IllegalStateException(errorMessage);
+        }
+    }
+
+    public static void validateFileOrThrowException(File file) {
+        if (file != null && !file.exists()) {
+            throw new FileFormatException(String.format("File does not exist %s", file.getAbsolutePath()));
+        }
+        if (file != null && !file.isFile()) {
+            throw new FileFormatException(String.format("File cannot be parsed %s", file.getAbsolutePath()));
+        }
+    }
 }
