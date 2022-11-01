@@ -6,6 +6,8 @@ import com.vehicles.service.validation.validators.FieldsValidator;
 import java.util.Arrays;
 import java.util.Map;
 
+import static com.vehicles.domain.constants.Fields.VEHICLE_TYPE;
+
 public class VehicleTypeValidator extends FieldsValidator {
 
     @Override

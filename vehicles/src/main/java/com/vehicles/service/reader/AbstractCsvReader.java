@@ -6,12 +6,14 @@ import com.vehicles.controller.exception.exceptions.VehicleServiceException;
 import com.vehicles.service.validation.validators.impl.VehicleTypeValidator;
 import com.vehicles.service.validation.chain.VehicleValidationChain;
 import lombok.RequiredArgsConstructor;
-import net.bytebuddy.pool.TypePool;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
+
+import static com.vehicles.domain.constants.Fields.VEHICLE_TYPE;
 
 @RequiredArgsConstructor
 public abstract class AbstractCsvReader implements ApplicationFileReader {
@@ -21,26 +23,32 @@ public abstract class AbstractCsvReader implements ApplicationFileReader {
         String vehicleType = filePath.substring(0, filePath.indexOf("."));
         String fullPath = DEFAULT_FILE_PATH + filePath;
         List<Map<String, String>> listOfInputs = getMapOfValidatedValues(vehicleType, fullPath);
-//        List<Vehicle> vehicles = mapToEntities(vehicleType,listOfInputs);
+        List<Vehicle> vehicles = mapToEntities(listOfInputs);
+//        persist(vehicles);
+        return vehicles;
+    }
 
-        return Collections.emptyList();
+    private List<Vehicle> mapToEntities(List<Map<String, String>> listOfInputs) {
+        return listOfInputs.stream()
+                .map(e -> VehicleType.valueOf(e.get(VEHICLE_TYPE)).getVehicleBuilder().createVehicle(e))
+                .collect(Collectors.toList());
     }
 
     private List<Map<String, String>> getMapOfValidatedValues(String vehicleType, String fullPath) {
         List<String> lines = getFileContents(fullPath);
         String[] fields = lines.get(0).split(DELIMITER);
-        Map<String, String> fieldValues = new HashMap<>();
         List<Map<String, String>> listOfMaps = new ArrayList<>();
         for (int i = 1; i < lines.size(); i++) {
             String[] values = lines.get(i).split(DELIMITER);
+            Map<String, String> fieldValues = new HashMap<>();
             if (values.length == fields.length) {
                 for (int j = 0; j < values.length; j++) {
                     fieldValues.put(fields[j], values[j]);
                 }
-                boolean isValid = validateInputValues(vehicleType, fieldValues);
-                if (isValid) {
-                    listOfMaps.add(fieldValues);
-                }
+            }
+            boolean isValid = validateInputValues(vehicleType, fieldValues);
+            if (isValid) {
+                listOfMaps.add(fieldValues);
             }
         }
         return listOfMaps;

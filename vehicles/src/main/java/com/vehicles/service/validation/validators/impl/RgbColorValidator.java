@@ -4,7 +4,8 @@ import com.vehicles.service.validation.validators.FieldsValidator;
 
 import java.util.Map;
 
-import static com.vehicles.service.validation.ValidationUtils.RGB_COLOR_REGEX;
+import static com.vehicles.domain.constants.Fields.VEHICLE_COLOR;
+import static com.vehicles.service.Utils.RGB_COLOR_REGEX;
 
 public class RgbColorValidator extends FieldsValidator {
 

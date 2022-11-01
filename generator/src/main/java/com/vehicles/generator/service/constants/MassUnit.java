@@ -5,9 +5,6 @@ public enum MassUnit {
     KG,
     T,
     LB,
-    ST,
-    G,
-    MG,
-    MKG
+    ST
 
 }

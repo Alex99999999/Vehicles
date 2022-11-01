@@ -1,15 +1,17 @@
 package com.vehicles.service.validation.validators.impl;
 
-import com.vehicles.service.validation.ValidationUtils;
+import com.vehicles.service.Utils;
 import com.vehicles.service.validation.validators.FieldsValidator;
 
 import java.util.Map;
+
+import static com.vehicles.domain.constants.Fields.FABRICATION_DATE;
 
 public class DateValidator extends FieldsValidator {
 
     @Override
     public boolean doValidate(Map<String, String> fieldValues) {
-        boolean isValid = ValidationUtils.validateDate(fieldValues.get(FABRICATION_DATE));
+        boolean isValid = Utils.validateDate(fieldValues.get(FABRICATION_DATE));
         if (!isValid) {
             return false;
         }

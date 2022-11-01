@@ -1,4 +1,4 @@
-package com.vehicles.service.validation;
+package com.vehicles.service;
 
 import com.vehicles.domain.constants.FileFormat;
 import com.vehicles.controller.exception.exceptions.VehicleServiceException;
@@ -9,7 +9,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Arrays;
 
-public class ValidationUtils {
+public class Utils {
 
     public static final String DATE_REGEX = "^\\d{4}\\D\\d{2}\\D\\d{2}$";
     public static final String DATE_PATTERN = "yyyy-MM-dd";
@@ -29,7 +29,7 @@ public class ValidationUtils {
     }
 
     public static boolean validateDate(String date) {
-        return !date.matches(DATE_REGEX);
+        return date.matches(DATE_REGEX);
     }
 
     public static void validateFileFormatOrThrowFileFormatException(String filePath) {

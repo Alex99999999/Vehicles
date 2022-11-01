@@ -6,7 +6,6 @@ import java.util.List;
 
 public interface VehicleService {
     List<Vehicle> uploadDataFromFile(String filePath);
-//    void createVehicle(VehicleRequestDto vehicleRequestDto);
 
     List<Vehicle> findAll();
 

@@ -6,7 +6,7 @@ public enum CarBodyType {
     SUPERMINI,
     HATCHBACK,
     MINI_MPV,
-    MPV,
+    SUV,
     SEDAN
 
 }

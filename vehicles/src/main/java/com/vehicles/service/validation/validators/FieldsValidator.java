@@ -5,11 +5,6 @@ import java.util.Map;
 
 public abstract class FieldsValidator {
 
-    protected static final String VEHICLE_TYPE = "type";
-    protected static final String VEHICLE_COLOR = "color";
-    protected static final String FABRICATION_DATE = "fabricationDate";
-    protected static final String CAR_BODY_TYPE = "bodyType";
-    protected static final String TRUCK_LOADING_CAPACITY = "loadingCapacity";
     private FieldsValidator nextValidator;
 
     public abstract boolean doValidate(Map<String, String> fieldValues);
