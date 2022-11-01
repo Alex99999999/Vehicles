@@ -1,11 +1,10 @@
 package com.vehicles.domain;
 
-import com.vehicles.constants.VehicleType;
+import com.vehicles.domain.constants.VehicleType;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.UUID;
 
 

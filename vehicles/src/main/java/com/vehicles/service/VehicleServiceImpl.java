@@ -1,12 +1,12 @@
 package com.vehicles.service;
 
+import com.vehicles.controller.exception.exceptions.VehicleServiceException;
 import com.vehicles.domain.Vehicle;
-import com.vehicles.exception.exceptions.NoSuchEntityException;
-import com.vehicles.readers.format.AbstractFormatFileReader;
-import com.vehicles.readers.format.FormatFileReaderContainer;
+import com.vehicles.domain.constants.FileFormat;
 import com.vehicles.repository.VehicleRepository;
-import com.vehicles.utils.Utils;
-import com.vehicles.validation.ValidationUtils;
+import com.vehicles.service.reader.ApplicationFileReader;
+import com.vehicles.service.utils.Utils;
+import com.vehicles.service.validation.ValidationUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +27,8 @@ public class VehicleServiceImpl implements VehicleService {
     public List<Vehicle> uploadDataFromFile(String filePath) {
         ValidationUtils.validateFileFormatOrThrowFileFormatException(filePath);
         String fileFormat = Utils.getFileFormat(filePath);
-        AbstractFormatFileReader reader = FormatFileReaderContainer.getFormatFileReader(fileFormat);
+        ApplicationFileReader reader = getFileReader(fileFormat);
+        reader.readFile(filePath);
 
 
         return new ArrayList<>();
@@ -42,7 +43,7 @@ public class VehicleServiceImpl implements VehicleService {
     public Vehicle findById(String id) {
         UUID uuid = Utils.getUuidFromString(id);
         return this.vehicleRepository.findById(uuid)
-                .orElseThrow(() -> new NoSuchEntityException(String.format("Entity with id %s was not found in database", id)));
+                .orElseThrow(() -> new VehicleServiceException(String.format("Entity with id %s was not found in database", id)));
     }
 
     @Override
@@ -52,8 +53,8 @@ public class VehicleServiceImpl implements VehicleService {
 
     @Override
     public List<Vehicle> findByDateRange(String lower, String higher) {
-        LocalDate start = ValidationUtils.validateDateOrThrowDateFormatException(lower);
-        LocalDate end = ValidationUtils.validateDateOrThrowDateFormatException(higher);
+        LocalDate start = ValidationUtils.parseDateOrThrowVehicleServiceException(lower);
+        LocalDate end = ValidationUtils.parseDateOrThrowVehicleServiceException(higher);
         Date from = Date.valueOf(start);
         Date to = Date.valueOf(end);
         return this.vehicleRepository.findByDateRange(from, to);
@@ -61,14 +62,23 @@ public class VehicleServiceImpl implements VehicleService {
 
     @Override
     public List<Vehicle> findCarsReleasedBeforeDate(String date) {
-        LocalDate localDate = ValidationUtils.validateDateOrThrowDateFormatException(date);
+        LocalDate localDate = ValidationUtils.parseDateOrThrowVehicleServiceException(date);
         return this.vehicleRepository.findCarsReleasedBeforeDate(Date.valueOf(localDate));
     }
 
     @Override
     public List<Vehicle> findTrucksReleasedAfterDate(String date) {
-        LocalDate localDate = ValidationUtils.validateDateOrThrowDateFormatException(date);
+        LocalDate localDate = ValidationUtils.parseDateOrThrowVehicleServiceException(date);
         return this.vehicleRepository.findTrucksReleasedAfterDate(Date.valueOf(localDate));
+    }
+    private ApplicationFileReader getFileReader(String fileFormat) {
+        ApplicationFileReader fileReader;
+        try {
+            fileReader = FileFormat.valueOf(fileFormat.toUpperCase()).getFileReader();
+        } catch (IllegalArgumentException e) {
+            throw new VehicleServiceException(String.format("No validator found for type: %s", fileFormat));
+        }
+        return fileReader;
     }
 
 }

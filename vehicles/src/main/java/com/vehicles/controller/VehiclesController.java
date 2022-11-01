@@ -23,7 +23,7 @@ public class VehiclesController {
         return "Hello!";
     }
 
-    @PostMapping("/upload/single{filePath}")
+    @PostMapping("/upload/single/{filePath}")
     ResponseEntity<List<Vehicle>> uploadDataFromFile(@PathVariable @NotNull String filePath) {
         List<Vehicle> vehicles = this.vehicleService.uploadDataFromFile(filePath);
         return new ResponseEntity<>(vehicles, HttpStatus.OK);
