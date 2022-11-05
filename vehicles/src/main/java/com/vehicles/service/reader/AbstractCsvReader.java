@@ -23,15 +23,20 @@ public abstract class AbstractCsvReader implements ApplicationFileReader {
         String vehicleType = filePath.substring(0, filePath.indexOf("."));
         String fullPath = DEFAULT_FILE_PATH + filePath;
         List<Map<String, String>> listOfInputs = getMapOfValidatedValues(vehicleType, fullPath);
-        List<Vehicle> vehicles = mapToEntities(listOfInputs);
-//        persist(vehicles);
-        return vehicles;
+        Set<Vehicle> vehicles = mapToEntities(listOfInputs);
+        return persist(vehicles);
     }
 
-    private List<Vehicle> mapToEntities(List<Map<String, String>> listOfInputs) {
+    private List<Vehicle> persist(Set<Vehicle> vehicles) {
+
+
+
+    }
+
+    private Set<Vehicle> mapToEntities(List<Map<String, String>> listOfInputs) {
         return listOfInputs.stream()
                 .map(e -> VehicleType.valueOf(e.get(VEHICLE_TYPE)).getVehicleBuilder().createVehicle(e))
-                .collect(Collectors.toList());
+                .collect(Collectors.toSet());
     }
 
     private List<Map<String, String>> getMapOfValidatedValues(String vehicleType, String fullPath) {
